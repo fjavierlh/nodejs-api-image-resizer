@@ -1,0 +1,17 @@
+{
+  "name": "google-cloud-function",
+  "version": "1.0.0",
+  "description": "A Google Cloud Function for Node.js to ",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx @google-cloud/functions-framework --target=resizeImage"
+  },
+  "dependencies": {
+    "@google-cloud/functions-framework": "^3.1.1",
+    "express-multipart-file-parser": "^0.1.2",
+    "sharp": "^0.30.4",
+    "uuid": "^8.3.2"
+  },
+  "author": "fjavierlh",
+  "license": "ISC"
+}
