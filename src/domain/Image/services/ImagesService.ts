@@ -13,6 +13,14 @@ class ImagesService {
   public async deleteByTaskId(taskId: string): Promise<void> {
     return this.images.deleteByTaskId(taskId);
   }
+
+  public async list(): Promise<Image[]> {
+    return this.images.list();
+  }
+
+  public async byId(id: string): Promise<Image | undefined> {
+    return this.images.byId(id);
+  }
 }
 
 export default ImagesService;
