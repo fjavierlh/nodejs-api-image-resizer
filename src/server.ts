@@ -21,6 +21,7 @@ class Server {
     this.app.use(urlencoded({ extended: true }));
     this.app.use(helmet.xssFilter());
     this.app.use(helmet.noSniff());
+    this.app.use(express.static(__dirname + '/output'));
     this.app.use(helmet.hidePoweredBy());
     this.app.use(helmet.frameguard({ action: 'deny' }));
     this.app.use(compress());
@@ -31,8 +32,7 @@ class Server {
 
     registerRoutes(router);
 
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    router.use((err: Error, req: Request, res: Response, next: Function) => {
+    router.use((err: Error, req: Request, res: Response) => {
       console.log(err);
       res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.message);
     });
