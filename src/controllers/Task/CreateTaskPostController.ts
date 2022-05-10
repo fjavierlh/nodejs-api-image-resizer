@@ -112,14 +112,10 @@ class CreateTaskPostController implements Controller {
 
   private renameOriginalFile({ originalname, path, mimetype }: File): string[] {
     const cleanedOriginalName = cleanFilename(originalname);
-    console.log('path =>', path);
-
     const md5Source = this.fileService.hashFile(path, 'md5');
-    console.log('md5Source =>', md5Source);
-
     const extension = getExtension(mimetype);
     const newPathFile = `output/${cleanedOriginalName}/src/${md5Source}.${extension}`;
-    console.log('newPathFile =>', newPathFile);
+
     this.fileService.rename(path, newPathFile);
 
     return [cleanedOriginalName, newPathFile, md5Source];
