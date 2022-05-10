@@ -5,13 +5,15 @@ const imageToSchema = ({
   id,
   createdAt,
   md5,
+  taskId,
   pathToSource,
   resolution: { width, height }
 }: Image): any => ({
   id,
   created_at: createdAt,
-  path_to_source: pathToSource,
   md5,
+  task_id: taskId,
+  path_to_source: pathToSource,
   width,
   height
 });
@@ -19,6 +21,7 @@ const imageToSchema = ({
 const schemaToImage = ({
   id,
   createdAt,
+  task_id,
   md5,
   width,
   height,
@@ -27,6 +30,7 @@ const schemaToImage = ({
   id,
   createdAt,
   md5,
+  taskId: task_id,
   pathToSource: pathSource,
   resolution: {
     width,

@@ -13,6 +13,10 @@ const ImageSchema = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false
     },
+    task_id: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     md5: {
       type: DataTypes.STRING,
       allowNull: false
