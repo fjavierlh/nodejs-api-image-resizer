@@ -19,16 +19,20 @@ class FilesService {
     this.files.rename(oldPath, newPath);
   }
 
-  public delete(path: string): void {
-    this.files.delete(path);
-  }
-
   public createPath(path: string): void {
     return this.files.makeDir(path);
   }
 
   public hashFile(path: string, algorithm: string): string {
     return this.files.hashFile(path, algorithm);
+  }
+
+  public remove(path: string): void {
+    this.files.remove(path);
+  }
+
+  public removeDir(path: string): void {
+    this.files.removeDir(path);
   }
 
   public getDimesions(path: string): Resolution {

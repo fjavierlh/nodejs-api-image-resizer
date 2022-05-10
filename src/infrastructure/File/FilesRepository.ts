@@ -22,8 +22,12 @@ class FilesRepository implements Files {
     fs.rename(oldPath, newPath);
   }
 
-  public delete(path: string): void {
-    fs.emptyDirSync(path);
+  public remove(path: string): void {
+    fs.unlink(path);
+  }
+
+  public removeDir(path: string): void {
+    fs.removeSync(path);
   }
 
   public hashFile(path: string, algorithm: string): string {
