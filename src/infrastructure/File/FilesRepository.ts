@@ -1,6 +1,6 @@
 import { WriteStream } from 'fs-extra';
 import fs from 'fs-extra';
-import Files from '../../domain/FileManager/Files.interface';
+import Files from '../../domain/File/Files.interface';
 import * as crypto from 'crypto';
 import Resolution from '../../domain/Image/model/ImageResolution';
 import sizeOf from 'image-size';
@@ -24,14 +24,6 @@ class FilesRepository implements Files {
 
   public delete(path: string): void {
     fs.emptyDirSync(path);
-  }
-
-  public cleanFilename(originalname: string): string {
-    return originalname.split('.').slice(0, -1).join('.').replace(/\s/g, '_');
-  }
-
-  public getExtension(mimetype: string): string | undefined {
-    return mimetype.split('/').pop();
   }
 
   public hashFile(path: string, algorithm: string): string {

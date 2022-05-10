@@ -27,14 +27,6 @@ class FilesService {
     return this.files.makeDir(path);
   }
 
-  public cleanFilename(originalname: string): string {
-    return this.files.cleanFilename(originalname);
-  }
-
-  public getExtension(mymetype: string): string | undefined {
-    return this.files.getExtension(mymetype);
-  }
-
   public hashFile(path: string, algorithm: string): string {
     return this.files.hashFile(path, algorithm);
   }
