@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Task from '../../domain/Task/model/Task';
 
 const taskToSchema = ({
@@ -14,12 +15,18 @@ const taskToSchema = ({
   status
 });
 
-const schemaToTask = (taskSchema: any): Task => ({
-  id: taskSchema.id,
-  createdAt: taskSchema.created_at,
-  updatedAt: taskSchema.updated_at,
-  pathToSource: taskSchema.path_to_source,
-  status: taskSchema.status
+const schemaToTask = ({
+  id,
+  created_at,
+  updated_at,
+  path_to_source,
+  status
+}: any): Task => ({
+  id,
+  createdAt: created_at,
+  updatedAt: updated_at,
+  pathToSource: path_to_source,
+  status
 });
 
 export { taskToSchema, schemaToTask };

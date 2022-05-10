@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from '../../domain/Image/model/Image';
 
 const imageToSchema = ({
