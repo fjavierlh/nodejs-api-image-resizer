@@ -1,7 +1,7 @@
 import TaskStatus from './TaskStatuses';
 
 type Task = {
-  readonly id?: string;
+  readonly id: string;
   readonly createdAt: string;
   readonly updatedAt: string[];
   readonly pathToSource: string;
