@@ -11,7 +11,11 @@ const bootstrapContainerDI = () => {
   Container.set('FilesRepository', new FilesRepository());
   Container.set(
     'ImageResizerHttp',
-    new ImageResizerHttp(new FecthHttpClient('http://localhost:8080'))
+    new ImageResizerHttp(
+      new FecthHttpClient(
+        process.env.GOOGLE_CLOUD_FUNCTION_URL || 'http://localhost:8080'
+      )
+    )
   );
 };
 
