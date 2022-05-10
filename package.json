@@ -8,7 +8,7 @@
     "preserve": "npm run build",
     "start:gcf": "cd google-cloud-function && npm run dev",
     "db:up": "docker-compose up -d",
-    "serve": "npm run db:up && cross-env NODE_ENV=development concurrently \"tsc --watch\" \"nodemon -q dist/server.js\"",
+    "serve": "npm run db:up && cross-env NODE_ENV=development concurrently \"tsc --watch\" \"nodemon -q dist/start.js\"",
     "dev": "concurrently --kill-others \"npm run start:gcf\" \"npm run serve\"  ",
     "prestart": "npm run build",
     "start": "cross-env NODE_ENV=production node dist/index.js",
