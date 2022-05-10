@@ -25,6 +25,17 @@ class TasksRepository implements Tasks {
   public async updateStatus(id: string, newStatus: TaskStatus): Promise<void> {
     await TaskSchema.update({ status: newStatus }, { where: { id } });
   }
+
+  public async lastCreatedByOriginalName(
+    originalName: string
+  ): Promise<Task | undefined> {
+    const task = await TaskSchema.findOne({
+      where: { original_name: originalName },
+      order: [['created_at', 'DESC']]
+    });
+    if (!task) return;
+    return schemaToTask(task);
+  }
 }
 
 export default TasksRepository;

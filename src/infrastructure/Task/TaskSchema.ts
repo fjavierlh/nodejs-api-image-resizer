@@ -18,6 +18,14 @@ const TaskSchema = sequelize.define(
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false
     },
+    original_name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    md5_source: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     path_to_source: {
       type: DataTypes.STRING,
       allowNull: false

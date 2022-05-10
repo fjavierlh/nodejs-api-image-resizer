@@ -6,6 +6,7 @@ interface Tasks {
   persist(task: Task): Promise<void>;
   byId(id: string): Promise<Task | undefined>;
   updateStatus(id: string, status: TaskStatus): Promise<void>;
+  lastCreatedByOriginalName(originalName: string): Promise<Task | undefined>;
 }
 
 export default Tasks;

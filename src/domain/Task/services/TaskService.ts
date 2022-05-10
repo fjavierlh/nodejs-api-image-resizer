@@ -1,6 +1,7 @@
 import { Inject, Service } from 'typedi';
 import TasksRepository from '../../../infrastructure/Task/TasksRepository';
 import Task from '../model/Task';
+import TaskStatus from '../model/TaskStatuses';
 
 @Service()
 class TasksService {
@@ -16,6 +17,16 @@ class TasksService {
 
   public async byId(id: string): Promise<Task | undefined> {
     return this.tasks.byId(id);
+  }
+
+  public async lastCreatedByOriginalName(
+    originalName: string
+  ): Promise<Task | undefined> {
+    return this.tasks.lastCreatedByOriginalName(originalName);
+  }
+
+  public async updateStatus(id: string, status: TaskStatus): Promise<void> {
+    return this.tasks.updateStatus(id, status);
   }
 }
 
