@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 import { Service } from 'typedi';
-import ImagesService from '../../domain/Image/services/ImagesService';
-import Controller from '../Controller.interface';
+import ImagesService from '../../../domain/Image/services/ImagesService';
+import UseCase from '../UseCase.interface';
 
 @Service()
-class ListImagesGetController implements Controller {
+class ListImagesUseCase implements UseCase {
   constructor(private imageService: ImagesService) {}
 
   public async run(req: Request, res: Response): Promise<void> {
@@ -18,4 +18,4 @@ class ListImagesGetController implements Controller {
   }
 }
 
-export default ListImagesGetController;
+export default ListImagesUseCase;

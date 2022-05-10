@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 import { Service } from 'typedi';
-import TasksService from '../../domain/Task/services/TaskService';
-import Controller from '../Controller.interface';
+import TasksService from '../../../domain/Task/services/TaskService';
+import UseCase from '../UseCase.interface';
 
 @Service()
-class ListTasksGetController implements Controller {
+class ListTasksUseCase implements UseCase {
   constructor(private tasksService: TasksService) {}
 
   public async run(req: Request, res: Response): Promise<void> {
@@ -18,4 +18,4 @@ class ListTasksGetController implements Controller {
   }
 }
 
-export default ListTasksGetController;
+export default ListTasksUseCase;

@@ -1,20 +1,20 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 import { Service } from 'typedi';
-import { isUuid } from '../../domain/Shared/utils/isUuid';
-import TasksService from '../../domain/Task/services/TaskService';
-import Controller from '../Controller.interface';
+import ImagesService from '../../../domain/Image/services/ImagesService';
+import { isUuid } from '../../../domain/Shared/utils/isUuid';
+import UseCase from '../UseCase.interface';
 
-export type CheckStatusGetControllerRequest = Request & {
+export type ImageByIdGetUseCaseRequest = Request & {
   params: { id: string };
 };
 
 @Service()
-class CheckStatusGetController implements Controller {
-  constructor(private tasksService: TasksService) {}
+class ImageByIdUseCase implements UseCase {
+  constructor(private imageService: ImagesService) {}
 
   public async run(
-    req: CheckStatusGetControllerRequest,
+    req: ImageByIdGetUseCaseRequest,
     res: Response
   ): Promise<void> {
     try {
@@ -34,17 +34,17 @@ class CheckStatusGetController implements Controller {
         return;
       }
 
-      const task = await this.tasksService.byId(req.params.id);
+      const image = await this.imageService.byId(req.params.id);
 
-      if (!task) {
+      if (!image) {
         res.status(httpStatus.NOT_FOUND).send();
         return;
       }
-      res.status(200).send({ result: task });
+      res.status(200).send({ result: image });
     } catch (error) {
       res.status(httpStatus.BAD_REQUEST).send({ error });
     }
   }
 }
 
-export default CheckStatusGetController;
+export default ImageByIdUseCase;

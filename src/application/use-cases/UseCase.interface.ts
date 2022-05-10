@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
-interface Controller {
+interface UseCase {
   run(req: Request, res: Response): Promise<void>;
 }
 
-export default Controller;
+export default UseCase;

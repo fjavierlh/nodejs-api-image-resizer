@@ -3,26 +3,26 @@ import httpStatus from 'http-status';
 import { Service } from 'typedi';
 import { v4 as uuidv4 } from 'uuid';
 
-import File from '../../domain/File/model/File';
-import FilesService from '../../domain/File/Services/FilesService';
-import Image from '../../domain/Image/model/Image';
-import ImagesService from '../../domain/Image/services/ImagesService';
+import File from '../../../domain/File/model/File';
+import FilesService from '../../../domain/File/Services/FilesService';
+import Image from '../../../domain/Image/model/Image';
+import ImagesService from '../../../domain/Image/services/ImagesService';
 import ImageSizeVariant, {
   imageSizeVariants
-} from '../../domain/ImageResizer/model/ImageSizeVariants';
-import ImageResizerService from '../../domain/ImageResizer/services/ImageResizerService';
-import { cleanFilename } from '../../domain/Task/utils/cleanFileName';
-import { getExtension } from '../../domain/Task/utils/getExtension';
-import { timestamp } from '../../domain/Shared/utils/timestamp';
-import Task from '../../domain/Task/model/Task';
-import TaskStatus from '../../domain/Task/model/TaskStatuses';
-import TasksService from '../../domain/Task/services/TaskService';
-import Controller from '../Controller.interface';
+} from '../../../domain/ImageResizer/model/ImageSizeVariants';
+import ImageResizerService from '../../../domain/ImageResizer/services/ImageResizerService';
+import { timestamp } from '../../../domain/Shared/utils/timestamp';
+import Task from '../../../domain/Task/model/Task';
+import TaskStatus from '../../../domain/Task/model/TaskStatuses';
+import TasksService from '../../../domain/Task/services/TaskService';
+import { cleanFilename } from '../../../domain/Task/utils/cleanFileName';
+import { getExtension } from '../../../domain/Task/utils/getExtension';
+import UseCase from '../UseCase.interface';
 
 export type CreateTaskPostControllerRequest = Request & File;
 
 @Service()
-class CreateTaskPostController implements Controller {
+class CreateTaskUseCase implements UseCase {
   constructor(
     private taskService: TasksService,
     private imageService: ImagesService,
@@ -54,7 +54,6 @@ class CreateTaskPostController implements Controller {
       if (existentTask) {
         const { updatedAt, pathToSource, md5Source } = existentTask;
         updates.push(...updatedAt);
-        console.log('md5Source existent task => ', md5Source);
         if (md5Source === md5NewSource) {
           res
             .status(httpStatus.OK)
@@ -181,4 +180,4 @@ class CreateTaskPostController implements Controller {
   }
 }
 
-export default CreateTaskPostController;
+export default CreateTaskUseCase;
