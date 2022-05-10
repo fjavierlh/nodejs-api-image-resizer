@@ -1,28 +1,29 @@
-import httpStatus from 'http-status';
-import express, { Request, Response, Router } from 'express';
-import CreateTaskPostController, {
-  CreateTaskPostControllerRequest
-} from '../../controllers/CreateTaskPostController';
-import ListTasksGetController from '../../controllers/ListTasksGetController';
-import Container from 'typedi';
-import multer from 'multer';
+import { Request, Response, Router } from 'express';
 import fs from 'fs-extra';
-import cleanFileName from '../../utils/cleanFileName';
+import multer from 'multer';
+import Container from 'typedi';
 import { v4 as uuidv4 } from 'uuid';
+
 import CheckStatusTaskGetController, {
   CheckStatusGetControllerRequest
-} from '../../controllers/CheckStatusTaskGetController';
+} from '../../controllers/Task/CheckStatusTaskGetController';
+import CreateTaskPostController, {
+  CreateTaskPostControllerRequest
+} from '../../controllers/Task/CreateTaskPostController';
+import ListTasksGetController from '../../controllers/Task/ListTasksGetController';
+import { cleanFilename } from '../../domain/Task/utils/cleanFileName';
+import { getExtension } from '../../domain/Task/utils/getExtension';
 
 let pathOutput: string;
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const originalFilename = cleanFileName(file.originalname);
+    const originalFilename = cleanFilename(file.originalname);
     pathOutput = `output/${originalFilename}/src`;
     fs.mkdirsSync(pathOutput);
     cb(null, pathOutput);
   },
   filename: (req, file, cb) => {
-    const extension = file.mimetype.split('/').pop();
+    const extension = getExtension(file.mimetype);
     const tempUuid = uuidv4();
     const temporalFilename = `${tempUuid}.${extension}`;
     cb(null, `${temporalFilename}`);
@@ -31,23 +32,24 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-const router: Router = express.Router();
-
-router.post('/task', upload.single('image'), (req: Request, res: Response) => {
+export const register = (router: Router) => {
   const createTaskPostController = Container.get(CreateTaskPostController);
-  createTaskPostController.run(req as CreateTaskPostControllerRequest, res);
-});
+  router.post('/task', upload.single('image'), (req: Request, res: Response) =>
+    createTaskPostController.run(req as CreateTaskPostControllerRequest, res)
+  );
 
-router.get('/task', (req: Request, res: Response) => {
   const listTasksGetController = Container.get(ListTasksGetController);
-  listTasksGetController.run(req, res);
-});
+  router.get('/task', (req: Request, res: Response) => {
+    listTasksGetController.run(req, res);
+  });
 
-router.get('/task/:id', (req: Request, res: Response) => {
   const checkStatusTaskGetController = Container.get(
     CheckStatusTaskGetController
   );
-  checkStatusTaskGetController.run(req as CheckStatusGetControllerRequest, res);
-});
-
-export { router as tasksRouter };
+  router.get('/task/:id', (req: Request, res: Response) => {
+    checkStatusTaskGetController.run(
+      req as CheckStatusGetControllerRequest,
+      res
+    );
+  });
+};
