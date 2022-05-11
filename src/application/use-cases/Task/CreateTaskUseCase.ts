@@ -151,7 +151,7 @@ class CreateTaskUseCase implements UseCase {
 
         const result = response.body.pipe(writeStream);
 
-        const { newPath, resolution, md5 } = await new Promise(
+        const { newPathToSource, resolution, md5 } = await new Promise(
           (resolve, reject) => {
             result
               .on('finish', async () => {
@@ -161,10 +161,10 @@ class CreateTaskUseCase implements UseCase {
                   'md5'
                 );
                 const newFilename = `${md5}.${extension}`;
-                const newPath = `${outputPath}/${newFilename}`;
-                this.fileService.rename(temporalPath, newPath);
+                const newPathToSource = `${outputPath}/${newFilename}`;
+                this.fileService.rename(temporalPath, newPathToSource);
 
-                resolve({ newPath, resolution, md5 });
+                resolve({ newPathToSource, resolution, md5 });
               })
               .on('error', (error: Error) => {
                 reject(error);
@@ -178,7 +178,7 @@ class CreateTaskUseCase implements UseCase {
           taskId,
           md5,
           resolution,
-          pathToSource: newPath
+          pathToSource: newPathToSource
         };
       })
     );
