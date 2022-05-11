@@ -45,7 +45,7 @@ class CreateTaskUseCase implements UseCase {
       }
 
       const [cleanedOriginalName, newPathFile, md5NewSource] =
-        this.renameOriginalFile(file);
+        await this.renameOriginalFile(file);
 
       const existentTask: Task | undefined =
         await this.taskService.lastCreatedByOriginalName(cleanedOriginalName);
@@ -95,6 +95,8 @@ class CreateTaskUseCase implements UseCase {
         task.id
       );
 
+      console.log('resizedImages', resizedImages);
+
       await Promise.all(
         resizedImages.map(async (image) => {
           await this.imageService.create(image);
@@ -109,9 +111,13 @@ class CreateTaskUseCase implements UseCase {
     }
   }
 
-  private renameOriginalFile({ originalname, path, mimetype }: File): string[] {
+  private async renameOriginalFile({
+    originalname,
+    path,
+    mimetype
+  }: File): Promise<string[]> {
     const cleanedOriginalName = cleanFilename(originalname);
-    const md5Source = this.fileService.hashFile(path, 'md5');
+    const md5Source = await this.fileService.hashFile(path, 'md5');
     const extension = getExtension(mimetype);
     const newPathFile = `output/${cleanedOriginalName}/src/${md5Source}.${extension}`;
 
@@ -148,10 +154,12 @@ class CreateTaskUseCase implements UseCase {
         const { newPath, resolution, md5 } = await new Promise(
           (resolve, reject) => {
             result
-              .on('finish', () => {
-                // const path = `${outputPath}/${temporalFilename}`;
+              .on('finish', async () => {
                 const resolution = this.fileService.getDimesions(temporalPath);
-                const md5 = this.fileService.hashFile(temporalPath, 'md5');
+                const md5 = await this.fileService.hashFile(
+                  temporalPath,
+                  'md5'
+                );
                 const newFilename = `${md5}.${extension}`;
                 const newPath = `${outputPath}/${newFilename}`;
                 this.fileService.rename(temporalPath, newPath);

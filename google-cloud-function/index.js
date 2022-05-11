@@ -16,7 +16,7 @@ app.use(
 );
 app.use(express.static(__dirname + '/tmp'));
 
-exports.resizeImage = app.post('/', (req, res) => {
+exports.resizeImage = app.post('/', async (req, res) => {
   if (!req.files) {
     res.status(400).send('No file uploaded');
     return;
@@ -34,15 +34,15 @@ exports.resizeImage = app.post('/', (req, res) => {
   const fileName = `${uuidv4()}.${extension}`;
   const fileAbsolutePath = `${__dirname}/${TEMP_DIR}/${fileName}`;
 
-  fs.mkdirsSync(TEMP_DIR);
+  await fs.mkdirs(TEMP_DIR);
 
   sharp(buffer)
     .resize(width)
     .toFile(fileAbsolutePath)
     .then(() => {
       res.status(200).sendFile(fileAbsolutePath);
-      setTimeout(() => {
-        fs.rmSync(fileAbsolutePath);
+      setTimeout(async () => {
+        await fs.rm(fileAbsolutePath);
       }, 1000);
     })
     .catch((error) => {

@@ -7,15 +7,15 @@ import sizeOf from 'image-size';
 
 class FilesRepository implements Files {
   public makeDir(path: string): void {
-    fs.mkdirsSync(path);
+    fs.mkdirs(path);
   }
 
   public write(path: string): WriteStream {
     return fs.createWriteStream(path);
   }
 
-  public read(path: string): Buffer {
-    return fs.readFileSync(path);
+  public async read(path: string): Promise<Buffer> {
+    return fs.readFile(path);
   }
 
   public rename(oldPath: string, newPath: string): void {
@@ -27,11 +27,11 @@ class FilesRepository implements Files {
   }
 
   public removeDir(path: string): void {
-    fs.removeSync(path);
+    fs.remove(path);
   }
 
-  public hashFile(path: string, algorithm: string): string {
-    const buffer = this.read(path);
+  public async hashFile(path: string, algorithm: string): Promise<string> {
+    const buffer = await this.read(path);
     const hash = crypto.createHash(algorithm);
     hash.update(buffer);
 

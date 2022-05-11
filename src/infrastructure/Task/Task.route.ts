@@ -14,10 +14,10 @@ import { getExtension } from '../../domain/Task/utils/getExtension';
 
 let pathOutput: string;
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
+  destination: async (req, file, cb) => {
     const originalFilename = cleanFilename(file.originalname);
     pathOutput = `output/${originalFilename}/src`;
-    fs.mkdirsSync(pathOutput);
+    await fs.mkdirs(pathOutput);
     cb(null, pathOutput);
   },
   filename: (req, file, cb) => {

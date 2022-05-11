@@ -11,7 +11,7 @@ class FilesService {
     return this.files.write(path);
   }
 
-  public read(path: string): Buffer {
+  public async read(path: string): Promise<Buffer> {
     return this.files.read(path);
   }
 
@@ -23,7 +23,7 @@ class FilesService {
     return this.files.makeDir(path);
   }
 
-  public hashFile(path: string, algorithm: string): string {
+  public async hashFile(path: string, algorithm: string): Promise<string> {
     return this.files.hashFile(path, algorithm);
   }
 
