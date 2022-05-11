@@ -5,7 +5,7 @@ import ImagesService from '../../../domain/Image/services/ImagesService';
 import { isUuid } from '../../../domain/Shared/utils/isUuid';
 import UseCase from '../UseCase.interface';
 
-export type ImageByIdGetUseCaseRequest = Request & {
+export type ImageByIdUseCaseRequest = Request & {
   params: { id: string };
 };
 
@@ -13,10 +13,7 @@ export type ImageByIdGetUseCaseRequest = Request & {
 class ImageByIdUseCase implements UseCase {
   constructor(private imageService: ImagesService) {}
 
-  public async run(
-    req: ImageByIdGetUseCaseRequest,
-    res: Response
-  ): Promise<void> {
+  public async run(req: ImageByIdUseCaseRequest, res: Response): Promise<void> {
     try {
       const { id } = req.params;
 

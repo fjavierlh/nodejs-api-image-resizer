@@ -19,7 +19,7 @@ import { cleanFilename } from '../../../domain/Task/utils/cleanFileName';
 import { getExtension } from '../../../domain/Task/utils/getExtension';
 import UseCase from '../UseCase.interface';
 
-export type CreateTaskPostControllerRequest = Request & File;
+export type CreateTaskUseCaseRequest = Request & File;
 
 @Service()
 class CreateTaskUseCase implements UseCase {
@@ -31,7 +31,7 @@ class CreateTaskUseCase implements UseCase {
   ) {}
 
   public async run(
-    req: CreateTaskPostControllerRequest,
+    req: CreateTaskUseCaseRequest,
     res: Response
   ): Promise<void> {
     try {
@@ -103,7 +103,7 @@ class CreateTaskUseCase implements UseCase {
 
       await this.taskService.updateStatus(task.id, TaskStatus.DONE);
 
-      res.status(httpStatus.CREATED).send();
+      res.status(httpStatus.ACCEPTED).send();
     } catch (error) {
       res.status(httpStatus.BAD_REQUEST).json({ error });
     }
@@ -140,9 +140,8 @@ class CreateTaskUseCase implements UseCase {
         this.fileService.createPath(outputPath);
 
         const temporalFilename = `${uuidv4()}.${extension}`;
-        const writeStream = this.fileService.write(
-          `${outputPath}/${temporalFilename}`
-        );
+        const temporalPath = `${outputPath}/${temporalFilename}`;
+        const writeStream = this.fileService.write(temporalPath);
 
         const result = response.body.pipe(writeStream);
 
@@ -150,15 +149,13 @@ class CreateTaskUseCase implements UseCase {
           (resolve, reject) => {
             result
               .on('finish', () => {
-                const path = `${outputPath}/${temporalFilename}`;
-                const resolution = this.fileService.getDimesions(path);
-                const md5 = this.fileService.hashFile(path, 'md5');
+                // const path = `${outputPath}/${temporalFilename}`;
+                const resolution = this.fileService.getDimesions(temporalPath);
+                const md5 = this.fileService.hashFile(temporalPath, 'md5');
                 const newFilename = `${md5}.${extension}`;
                 const newPath = `${outputPath}/${newFilename}`;
-                this.fileService.rename(
-                  `${outputPath}/${temporalFilename}`,
-                  `${outputPath}/${newFilename}`
-                );
+                this.fileService.rename(temporalPath, newPath);
+
                 resolve({ newPath, resolution, md5 });
               })
               .on('error', (error: Error) => {

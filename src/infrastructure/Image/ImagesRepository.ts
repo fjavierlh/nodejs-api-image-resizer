@@ -15,14 +15,14 @@ class ImagesRepository implements Images {
   }
 
   public async list(): Promise<Image[]> {
-    const tasks = await ImageSchema.findAll();
-    return tasks.map((task) => schemaToImage(task));
+    const images = await ImageSchema.findAll();
+    return images.map((task) => schemaToImage(task));
   }
 
   public async byId(id: string): Promise<Image | undefined> {
-    const task = await ImageSchema.findByPk(id);
-    if (!task) return;
-    return schemaToImage(task);
+    const image = await ImageSchema.findByPk(id);
+    if (!image) return;
+    return schemaToImage(image);
   }
 }
 

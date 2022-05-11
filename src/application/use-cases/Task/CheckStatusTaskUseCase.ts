@@ -5,16 +5,16 @@ import { isUuid } from '../../../domain/Shared/utils/isUuid';
 import TasksService from '../../../domain/Task/services/TaskService';
 import UseCase from '../UseCase.interface';
 
-export type CheckStatusGetUseCaseRequest = Request & {
+export type CheckStatusUseCaseRequest = Request & {
   params: { id: string };
 };
 
 @Service()
-class CheckStatusGetUseCase implements UseCase {
+class CheckStatusUseCase implements UseCase {
   constructor(private tasksService: TasksService) {}
 
   public async run(
-    req: CheckStatusGetUseCaseRequest,
+    req: CheckStatusUseCaseRequest,
     res: Response
   ): Promise<void> {
     try {
@@ -47,4 +47,4 @@ class CheckStatusGetUseCase implements UseCase {
   }
 }
 
-export default CheckStatusGetUseCase;
+export default CheckStatusUseCase;
