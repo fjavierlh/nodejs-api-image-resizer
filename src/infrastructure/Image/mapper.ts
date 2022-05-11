@@ -4,8 +4,8 @@ import Image from '../../domain/Image/model/Image';
 const imageToSchema = ({
   id,
   createdAt,
-  md5,
   taskId,
+  md5,
   pathToSource,
   resolution: { width, height }
 }: Image): any => ({
@@ -20,18 +20,18 @@ const imageToSchema = ({
 
 const schemaToImage = ({
   id,
-  createdAt,
+  created_at,
   task_id,
   md5,
+  path_to_source,
   width,
-  height,
-  pathSource
+  height
 }: any): Image => ({
   id,
-  createdAt,
-  md5,
+  createdAt: created_at,
   taskId: task_id,
-  pathToSource: pathSource,
+  md5,
+  pathToSource: path_to_source,
   resolution: {
     width,
     height
