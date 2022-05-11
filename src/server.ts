@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express, NextFunction, Request, Response } from 'express';
 import Router from 'express-promise-router';
 import compress from 'compression';
 
@@ -21,7 +21,7 @@ class Server {
     this.app.use(urlencoded({ extended: true }));
     this.app.use(helmet.xssFilter());
     this.app.use(helmet.noSniff());
-    this.app.use(express.static(__dirname + '/output'));
+    this.app.use(express.static(__dirname + '/../output'));
     this.app.use(helmet.hidePoweredBy());
     this.app.use(helmet.frameguard({ action: 'deny' }));
     this.app.use(compress());
@@ -32,10 +32,13 @@ class Server {
 
     registerRoutes(router);
 
-    router.use((err: Error, req: Request, res: Response) => {
-      console.log(err);
-      res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.message);
-    });
+    router.use(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      (err: Error, req: Request, res: Response, next: NextFunction) => {
+        console.log(err);
+        res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.message);
+      }
+    );
   }
 
   async listen(): Promise<void> {
