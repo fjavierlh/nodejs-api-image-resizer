@@ -1,13 +1,13 @@
 import 'reflect-metadata';
 import { Container } from 'typedi';
-import ImageResizerApp from '../../../../../src/ImageResizerApp';
-import { connectDB } from '../../../../../src/infrastructure/core/config/postgres.config';
-import bootstrapContainerDI from '../../../../../src/infrastructure/core/dependency-injection/container';
+import ImageResizerApp from '../../../src/ImageResizerApp';
+import { connectDB } from '../../../src/infrastructure/core/config/postgres.config';
+import bootstrapContainerDI from '../../../src/infrastructure/core/dependency-injection/container';
 import request from 'supertest';
 import path from 'path';
-import ImagesRepository from '../../../../../src/infrastructure/Image/ImagesRepository';
-import TasksRepository from '../../../../../src/infrastructure/Task/TasksRepository';
-import FilesRepository from '../../../../../src/infrastructure/File/FilesRepository';
+import ImagesRepository from '../../../src/infrastructure/Image/ImagesRepository';
+import TasksRepository from '../../../src/infrastructure/Task/TasksRepository';
+import FilesRepository from '../../../src/infrastructure/File/FilesRepository';
 
 let _request: request.Test;
 let _response: request.Response;
@@ -19,7 +19,7 @@ describe('ListImagesUseCase', () => {
   let filesRepository: FilesRepository;
   const filePathToUpload = path.resolve(
     __dirname,
-    './../../../../mock/test_image.png'
+    './../../mock/test_image.png'
   );
 
   beforeAll(async () => {
@@ -45,7 +45,7 @@ describe('ListImagesUseCase', () => {
     _request = request(application.httpServer).get('/image');
   });
 
-  it('return 200 ok status code with all tasks listed', async () => {
+  it('return 200 ok status code with all images listed', async () => {
     _response = await _request;
 
     expect(_response.statusCode).toEqual(200);
