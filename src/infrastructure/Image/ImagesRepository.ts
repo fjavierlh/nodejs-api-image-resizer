@@ -24,6 +24,13 @@ class ImagesRepository implements Images {
     if (!image) return;
     return schemaToImage(image);
   }
+
+  public async deleteAll(): Promise<void> {
+    await ImageSchema.destroy({
+      where: {},
+      truncate: true
+    });
+  }
 }
 
 export default ImagesRepository;

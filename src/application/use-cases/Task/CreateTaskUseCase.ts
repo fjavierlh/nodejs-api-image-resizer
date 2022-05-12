@@ -56,7 +56,7 @@ class CreateTaskUseCase implements UseCase {
         updates.push(...updatedAt);
         if (md5Source === md5NewSource) {
           res
-            .status(httpStatus.OK)
+            .status(httpStatus.CONFLICT)
             .send({ error: 'Task with this image already exists' });
           return;
         }

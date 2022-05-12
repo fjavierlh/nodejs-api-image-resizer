@@ -36,6 +36,13 @@ class TasksRepository implements Tasks {
     if (!task) return;
     return schemaToTask(task);
   }
+
+  public async deleteAll(): Promise<void> {
+    await TaskSchema.destroy({
+      where: {},
+      truncate: true
+    });
+  }
 }
 
 export default TasksRepository;

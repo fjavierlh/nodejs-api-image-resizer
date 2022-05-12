@@ -5,6 +5,7 @@ interface Images {
   deleteByTaskId(taskId: string): Promise<void>;
   list(): Promise<Image[]>;
   byId(id: string): Promise<Image | undefined>;
+  deleteAll(): Promise<void>;
 }
 
 export default Images;

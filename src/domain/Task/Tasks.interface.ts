@@ -7,6 +7,7 @@ interface Tasks {
   byId(id: string): Promise<Task | undefined>;
   updateStatus(id: string, status: TaskStatus): Promise<void>;
   lastCreatedByOriginalName(originalName: string): Promise<Task | undefined>;
+  deleteAll(): Promise<void>;
 }
 
 export default Tasks;
