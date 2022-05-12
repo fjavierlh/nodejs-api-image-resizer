@@ -31,14 +31,14 @@ Once it's done, you can start the project.
 
 ## 2. Start the project 👨‍💻
 
-`npm run start`
+First up database with `npm run db:up` then you can run google cloud function and the node app executing `npm run start`
 
 Everything is running without errors? Great! You're ready to rock.
 _"Lights, camera, action!"_ 🎬
 
 The URL to run the app in "LOCAL MODE" are:
 
-- http://localhost:3000/
+- <http://localhost:3000/>
 
 Also, you can use the [postman collection](./nodejs-api-image-resizer.postman_collection.json) to see all available endpoints.
 
