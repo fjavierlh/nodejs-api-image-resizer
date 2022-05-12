@@ -21,7 +21,7 @@ class Server {
     this.app.use(urlencoded({ extended: true }));
     this.app.use(helmet.xssFilter());
     this.app.use(helmet.noSniff());
-    this.app.use(express.static(__dirname + '/../output'));
+    this.app.use('output', express.static(__dirname + '/../output'));
     this.app.use(helmet.hidePoweredBy());
     this.app.use(helmet.frameguard({ action: 'deny' }));
     this.app.use(compress());
