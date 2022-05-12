@@ -95,8 +95,6 @@ class CreateTaskUseCase implements UseCase {
         task.id
       );
 
-      console.log('resizedImages', resizedImages);
-
       await Promise.all(
         resizedImages.map(async (image) => {
           await this.imageService.create(image);

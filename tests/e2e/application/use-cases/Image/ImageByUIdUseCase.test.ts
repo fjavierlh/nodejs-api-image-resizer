@@ -42,8 +42,8 @@ describe('ImageByUuid', () => {
     await request(application.httpServer)
       .post('/task')
       .attach('image', filePathToUpload);
+
     const { body } = await request(application.httpServer).get('/image');
-    console.log('body', body);
     lastImage = body.result[0];
   });
 
