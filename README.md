@@ -8,7 +8,9 @@ A API Rest for logging image processing tasks, resizing them to 1024 and 800px w
 
 ### 1.1 Install Node.js 📦
 
-Install Node "Stable" (right now is `v17.4.0`). Download and install it via the [Node.js official page](https://nodejs.org/en/download/).
+Install Node "Stable" (right now is `v16.14.0`). Download and install it via the [Node.js official page](https://nodejs.org/en/download/).
+
+If you use `nvm` you can install with `nvm install 16.14.0` and then run `nvm use`.
 
 ### 1.2 Install Docker and docker-compose 📜
 
@@ -39,3 +41,19 @@ The URL to run the app in "LOCAL MODE" are:
 - http://localhost:3000/
 
 Also, you can use the [postman collection](./nodejs-api-image-resizer.postman_collection.json) to see all available endpoints.
+
+## 3. Testing 🧪
+
+### 3.1 e2e Tests
+
+To run e2e tests follow this steps in order:
+
+1. Up database executing `npm run db:up`
+2. Run Goggle Cloud Function with `npm run start:cfg`
+3. Now, in another terminal run the script `npm run test:e2e`
+
+And... Happy testing! 🥳
+
+### 3.2 Unit Tests (TODO)
+
+Unit tests not implemented yet.
